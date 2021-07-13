@@ -2,4 +2,4 @@
 AI Final Semester Project
 
 
-Members: 64359 - Syed Shaan Ali Rizvi & 64238 - Muhammad Asad Ahmed
+Members: 64359 - Syed Shaan Ali Rizvi & 64238 - Muhammad Asad Ahmed & 63437 - Ahsan Iqbal
