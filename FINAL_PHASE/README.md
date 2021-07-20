@@ -1,6 +1,6 @@
 <h1>SVM CODE:</h1>
 
-# CODE BY 64359-SHAAN
+<h3>CODE BY 64359-SHAAN</h3>
 
 import pandas as pd
 import numpy  as np
