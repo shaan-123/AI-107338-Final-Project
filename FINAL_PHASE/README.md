@@ -104,7 +104,7 @@ sub.head()
 
 
 
-<h1>CODE BY 64238-ASAD & 64359-SHAAN</h1>
+<h1>CODE BY 64238-ASAD</h1>
 
 <h3>KNN CODE:</h3>
 
