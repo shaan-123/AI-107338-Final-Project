@@ -100,6 +100,9 @@ sub.head()
 
 ![SVM](https://user-images.githubusercontent.com/61597800/126331276-c077c669-bb40-404d-9af4-6a0817a5297c.PNG)
 
+![svmaccur](https://user-images.githubusercontent.com/61597800/126364665-047599c0-20c3-44fa-ac8d-6721f3f93706.PNG)
+
+
 
 <h1>CODE BY 64238-ASAD & 64359-SHAAN</h1>
 
@@ -255,6 +258,10 @@ df_test['Survived']=y_pred
 df_test[['PassengerId','Survived']].to_csv("KNN_model.csv",index=False)
 
 ![Capture](https://user-images.githubusercontent.com/64367202/126348387-378d92cb-5222-40c8-baf7-67d63edceb99.PNG)
+
+
+![knnacc](https://user-images.githubusercontent.com/61597800/126364900-0bdb135c-c8db-4bca-9c13-444b3ddc3b2a.PNG)
+
 
 
 <h1>LINEAR CLASSIFIER CODE: </h1>
@@ -486,6 +493,15 @@ test_data['Survived'] = preds
     
 
 ![linear](https://user-images.githubusercontent.com/61597800/126363682-47bbc287-d4f8-47b6-bf85-8d35bd478957.PNG)
+
+
+<h1>EXPLANATION: </h1>
+
+Most of the models performed really similar in terms of test accuracy.
+
+Due to the small dataset size, all models have (slightly) overfitted the train data, giving lower test scores than expected
+
+After analysis of all three classifiers (SVM, KNN & Linear Classifier [LDR] ) and observing the accuracy scores it can be clearly seen that the SVM technique performed much better. Although the difference is not much high but somehow it is performing better as it is stated that KNN and Linear performs better when the test data is complex but in our conditions the data set size is less.
 
 
 
