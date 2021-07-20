@@ -76,12 +76,6 @@ sub.head()
 
 <h1>CODE BY 64238-ASAD & 64359-SHAAN</h1>
 <h2>KNN CODE:</h2>
-
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file 
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
@@ -93,7 +87,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn import tree
 from sklearn.neighbors import KNeighborsClassifier
 import re
-
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score
 
