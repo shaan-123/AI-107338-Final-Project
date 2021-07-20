@@ -1,7 +1,7 @@
 SVM CODE:
 
-#CODE BY 64359-SHAAN
-\n
+# CODE BY 64359-SHAAN
+
 import pandas as pd
 import numpy  as np
 
