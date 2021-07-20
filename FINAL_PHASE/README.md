@@ -33,6 +33,7 @@ comb['P2'] = comb['Pclass'] == 2
 comb['P3'] = comb['Pclass'] == 3
 
 # Embarked one hot encode
+
 comb['ES'] = comb['Embarked'] == 'S' 
 comb['EQ'] = comb['Embarked'] == 'Q'
 comb['EC'] = comb['Embarked'] == 'C'
