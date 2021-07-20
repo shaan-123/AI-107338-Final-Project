@@ -76,7 +76,7 @@ sub.head()
 
 <h1>CODE BY 64238-ASAD & 64359-SHAAN</h1>
 
-<h2>KNN CODE:</h2>
+<h3>KNN CODE:</h3>
 
 
 from sklearn.model_selection import train_test_split
@@ -228,3 +228,237 @@ df_test['Survived']=y_pred
 df_test[['PassengerId','Survived']].to_csv("KNN_model.csv",index=False)
 
 ![Capture](https://user-images.githubusercontent.com/64367202/126348387-378d92cb-5222-40c8-baf7-67d63edceb99.PNG)
+
+
+<h1>LINEAR CLASSIFIER CODE: </h1>
+
+<h3>CODE BY 64359-SHAAN , 64238-ASAD & 63437-AHSAN IQBAL(107339)</h3>
+
+import numpy as np
+
+import pandas as pd
+
+
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+train_data = pd.read_csv("train.csv")
+
+test_data = pd.read_csv("test.csv")
+
+train_data.describe()
+
+test_data.describe()
+
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+
+plt.subplots(figsize=(7, 5))
+
+plt.boxplot(train_data['Fare'])
+
+plt.title('Boxplot of Fare')
+
+plt.show()
+
+# Retrieve rows with Fare greater than 500
+
+train_data[train_data['Fare']>500]
+
+# Retrieve rows with Fare equal to 0
+
+train_data[train_data['Fare']==0]
+
+# Number of missing values in each column in train data
+
+train_data.isnull().sum()
+
+
+# Number of missing values in each column in test data
+
+test_data.isnull().sum()
+
+# Function to extract title from passenger's name
+
+def extract_title(df):
+    title = df['Name'].apply(lambda name: name.split(',')[1].split('.')[0].strip())
+    return title
+
+# Count of each title in train data
+
+train_data['Title'] = extract_title(train_data)
+
+train_data['Title'].value_counts()
+
+# Count of each title in test data
+
+test_data['Title'] = extract_title(test_data)
+
+test_data['Title'].value_counts()
+
+# Function to map titles to main categories
+
+def map_title(df):
+    title_category = {
+    "Capt": "Officer",
+    "Col": "Officer",
+    "Major": "Officer",
+    "Jonkheer": "Royalty",
+    "Don": "Royalty",
+    "Sir": "Royalty",
+    "Dr": "Officer",
+    "Rev": "Officer",
+    "the Countess": "Royalty",
+    "Dona": "Royalty",
+    "Mme": "Mrs",
+    "Mlle": "Miss",
+    "Ms": "Mrs",
+    "Mr": "Mr",
+    "Mrs": "Mrs",
+    "Miss": "Miss",
+    "Master": "Master",
+    "Lady": "Royalty"
+    }
+    new_title = df['Title'].map(title_category)
+    return new_title
+
+# Count of each title in train data after mapping
+
+train_data['Title'] = map_title(train_data)
+
+train_data['Title'].value_counts()
+
+# Count of each title in test data after mapping
+
+test_data['Title'] = map_title(test_data)
+
+test_data['Title'].value_counts()
+
+# Group train data by 'Pclass', 'Title' and calculate the median age
+
+train_data.groupby(['Pclass', 'Title']).median()['Age']
+
+# Function to identify passengers who have the title 'Miss' and, 1 or 2 value in the 'Parch' column
+
+def is_young(df):
+    young = []
+    for index, value in df['Parch'].items():
+        if ((df.loc[index, 'Title'] == 'Miss') and (value == 1 or value == 2)):
+            young.append(1)
+        else:
+            young.append(0)
+    return young
+
+# Group train data by 'Pclass', 'Title', 'Is_Young(Miss)' and calculate the median age
+
+train_data['Is_Young(Miss)'] = is_young(train_data)
+
+grouped_age = train_data.groupby(['Pclass', 'Title', 'Is_Young(Miss)']).median()['Age']
+
+grouped_age
+
+test_data['Is_Young(Miss)'] = is_young(test_data)
+
+# Fill missing age values in train and test data
+
+train_data.set_index(['Pclass', 'Title', 'Is_Young(Miss)'], drop=False, inplace=True)
+
+train_data['Age'].fillna(grouped_age, inplace=True)
+
+train_data.reset_index(drop=True, inplace=True)
+
+test_data.set_index(['Pclass', 'Title', 'Is_Young(Miss)'], drop=False, inplace=True)
+
+test_data['Age'].fillna(grouped_age, inplace=True)
+
+test_data.reset_index(drop=True, inplace=True)
+
+# Group train data by 'Pclass' and calculate the median fare
+
+grouped_fare = train_data.groupby('Pclass').median()['Fare']
+
+grouped_fare
+
+# Fill the missing fare value in test data
+
+test_data.set_index('Pclass', drop=False, inplace=True)
+
+test_data['Fare'].fillna(grouped_fare, inplace=True)
+
+test_data.reset_index(drop=True, inplace=True)
+
+# Drop unnecessary rows and columns
+
+train_data.drop(columns=['Name', 'Cabin', 'Ticket', 'Is_Young(Miss)'], inplace=True)
+
+test_data.drop(columns=['Name', 'Cabin', 'Ticket', 'Is_Young(Miss)'], inplace=True)
+
+train_data.dropna(subset=['Embarked'], inplace=True)
+
+# Missing values in train data after data cleaning
+
+train_data.isnull().sum()
+
+# Missing values in test data after data cleaning
+
+test_data.isnull().sum()
+
+from sklearn.preprocessing import LabelEncoder
+
+# Encode 'Sex' variable values
+
+le = LabelEncoder()
+
+train_data['Sex'] = le.fit_transform(train_data['Sex'])
+
+test_data['Sex'] = le.transform(test_data['Sex'])
+
+# Convert 'Embarked' and 'Title' into dummy variables
+
+train_data = pd.get_dummies(train_data, columns=['Embarked', 'Title'])
+
+test_data = pd.get_dummies(test_data, columns=['Embarked', 'Title'])
+
+# Pairwise correlation of columns
+
+corr = train_data.corr()
+
+corr
+
+from sklearn.preprocessing import MinMaxScaler
+
+# Apply feature scaling using MinMaxScaler
+
+scaler = MinMaxScaler()
+
+train_data.iloc[:, 2:] = scaler.fit_transform(train_data.iloc[:, 2:])
+
+test_data.iloc[:, 1:] = scaler.transform(test_data.iloc[:, 1:])
+
+train_data.head()
+
+X_train, X_test, y_train = train_data.iloc[:, 2:], test_data.iloc[:, 1:], train_data['Survived']
+
+lda = LinearDiscriminantAnalysis()
+
+lda.fit(X_train, y_train)
+
+# Test score
+
+y_preds = lda.predict(X_test)
+
+submission=(y_preds)
+
+# Function to generate submission file to get test score
+
+def submission(preds):
+
+test_data['Survived'] = preds
+    predictions = test_data[['PassengerId', 'Survived']]
+    predictions.to_csv('submissionLinear.csv', index=False)
+    
+
+![linear](https://user-images.githubusercontent.com/61597800/126363682-47bbc287-d4f8-47b6-bf85-8d35bd478957.PNG)
+
+
+
